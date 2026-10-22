@@ -14,7 +14,7 @@ export interface SendOtpResult {
   error?: string;
 }
 
-export async function sendOtp(payload: SendOtpPayload): Promise<SendOtpResult> {
+export async function sendOtpApi(payload: SendOtpPayload): Promise<SendOtpResult> {
   try {
     const response = await apiClient.post<SendOtpResponse>(
       '/auth/send-otp',
