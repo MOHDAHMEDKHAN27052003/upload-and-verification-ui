@@ -2,6 +2,7 @@
 
 import { SubmitEvent, useState } from "react";
 import { sendOtpApi } from "./sendOtpApi";
+import FeedbackMessage from "@/components/FeedbackMessage";
 
 export default function SendOtpUi() {
   const [email, setEmail] = useState("");
@@ -37,9 +38,7 @@ export default function SendOtpUi() {
   return (
     <main className="min-h-screen flex items-center justify-center px-4 bg-background text-foreground">
       <div className="w-full max-w-md">
-        {/* Card */}
         <div className="bg-card text-card-foreground border border-border rounded-lg shadow-lg p-8">
-          {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold mb-2">Send OTP</h1>
             <p className="text-muted-foreground text-sm">
@@ -47,7 +46,6 @@ export default function SendOtpUi() {
             </p>
           </div>
 
-          {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label
@@ -75,18 +73,10 @@ export default function SendOtpUi() {
             </button>
           </form>
 
-          {/* Feedback message */}
           {message && (
-            <div
-              role="alert"
-              className={`mt-5 px-4 py-3 rounded-md text-sm border ${
-                message.type === "success"
-                  ? "bg-secondary/10 text-secondary border-secondary/30"
-                  : "bg-destructive/10 text-destructive border-destructive/30"
-              }`}
-            >
+            <FeedbackMessage type={message.type} className="mt-5">
               {message.text}
-            </div>
+            </FeedbackMessage>
           )}
         </div>
       </div>
