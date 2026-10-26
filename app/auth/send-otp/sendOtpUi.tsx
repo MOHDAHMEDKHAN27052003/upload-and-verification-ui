@@ -3,8 +3,12 @@
 import { SubmitEvent, useState } from "react";
 import { sendOtpApi } from "./sendOtpApi";
 import FeedbackMessage from "@/components/FeedbackMessage";
+import { buttonClasses } from "@/components/styles";
+import { useAppDispatch } from "@/store/hooks";
+import { setEmail as setEmailInStore } from "@/store/otpSlice";
 
 export default function SendOtpUi() {
+  const dispatch = useAppDispatch();
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{
@@ -20,6 +24,8 @@ export default function SendOtpUi() {
     const result = await sendOtpApi({ email });
 
     if (result.success) {
+      dispatch(setEmailInStore(email));
+
       setMessage({
         type: "success",
         text: result.data?.message ?? "OTP sent successfully",
@@ -64,11 +70,7 @@ export default function SendOtpUi() {
               />
             </div>
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full py-3 px-4 rounded-md bg-primary text-primary-foreground font-medium hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background disabled:opacity-60 disabled:cursor-not-allowed transition"
-            >
+            <button type="submit" disabled={loading} className={buttonClasses}>
               {loading ? "Sending..." : "Send OTP"}
             </button>
           </form>
