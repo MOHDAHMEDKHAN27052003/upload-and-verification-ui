@@ -4,12 +4,16 @@ import { SubmitEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { sendOtpApi } from "./api";
 import FormError from "@/components/FormError";
+import Button from "@/components/Button";
+import { useAppDispatch } from "@/store/hooks";
+import { setEmail } from "@/store/authSlice";
 
 export default function SendOtpUi() {
     const router = useRouter();
-    const [email, setEmail] = useState("");
+    const [email, setEmailInput] = useState("");
     const [error, setError] = useState<string | null>();
     const [loading, setLoading] = useState(false);
+    const dispatch = useAppDispatch();
 
     async function handleSubmit(e: SubmitEvent) {
         e.preventDefault();
@@ -19,6 +23,7 @@ export default function SendOtpUi() {
         const result = await sendOtpApi({ email });
 
         if (result.success) {
+            dispatch(setEmail(email));
             router.push('/auth/verify-otp');
         }
 
@@ -54,17 +59,19 @@ export default function SendOtpUi() {
                                 autoComplete="email"
                                 required
                                 value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                onChange={(e) => setEmailInput(e.target.value)}
                                 disabled={loading}
                                 className="w-full rounded-lg border border-border bg-background px-4 py-2.5 text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30 disabled:opacity-60"
                             />
                         </div>
-                        <button
-                            disabled={loading || !email}
-                            className="w-full rounded-lg bg-primary px-4 py-2.5 font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/40 disabled:cursor-not-allowed disabled:opacity-60"
+                        <Button
+                            type="submit"
+                            loading={loading}
+                            loadingText="Sending code..."
+                            disabled={!email}
                         >
-                            {loading ? "Sending code..." : "Send verification code"}
-                        </button>
+                            Send verification code
+                        </Button>
 
                         <FormError message={error} />
                     </form>
