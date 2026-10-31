@@ -2,7 +2,8 @@
 
 import { SubmitEvent, useState } from "react";
 import { useRouter } from "next/navigation";
-import { sendOtpApi } from "./sendOtpApi";
+import { sendOtpApi } from "./api";
+import FormError from "@/components/FormError";
 
 export default function SendOtpUi() {
     const router = useRouter();
@@ -28,9 +29,7 @@ export default function SendOtpUi() {
     return (
         <main className="flex min-h-screen items-center justify-center bg-background px-4 py-12 text-foreground">
             <div className="w-full max-w-md">
-                {/* Card */}
                 <div className="rounded-xl border border-border bg-card p-8 text-card-foreground shadow-sm">
-                    {/* Decorative header */}
                     <div className="mb-8 text-center">
                         <h1 className="text-3xl font-semibold tracking-tight">
                             Verify Your Email
@@ -67,14 +66,7 @@ export default function SendOtpUi() {
                             {loading ? "Sending code..." : "Send verification code"}
                         </button>
 
-                        {error && (
-                            <div
-                                role="alert"
-                                className="rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive"
-                            >
-                                {error}
-                            </div>
-                        )}
+                        <FormError message={error} />
                     </form>
                 </div>
             </div>
