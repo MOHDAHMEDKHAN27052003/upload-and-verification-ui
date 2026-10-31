@@ -6,7 +6,7 @@ import { sendOtpApi } from "./api";
 import FormError from "@/components/FormError";
 import Button from "@/components/Button";
 import { useAppDispatch } from "@/store/hooks";
-import { setEmail } from "@/store/authSlice";
+import { setEmail } from "@/store/auth/authSlice";
 
 export default function SendOtpUi() {
     const router = useRouter();
