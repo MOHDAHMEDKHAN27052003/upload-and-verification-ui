@@ -1,9 +1,7 @@
 'use client';
 
 import { SubmitEvent, useState } from 'react';
-import axios from 'axios';
-
-const API_BASE_URL = 'http://localhost:4000';
+import { sendOtp } from './api';
 
 export default function SendOtpPage() {
   const [email, setEmail] = useState('');
@@ -18,18 +16,10 @@ export default function SendOtpPage() {
     setLoading(true);
 
     try {
-      const response = await axios.post(
-        `${API_BASE_URL}/auth/send-otp`,
-        { email },
-      );
-
-      setMessage(response.data.message);
+      const response = await sendOtp({ email });
+      setMessage(response.message);
     } catch (err: unknown) {
-      if (axios.isAxiosError(err) && err.response?.data?.message) {
-        setError(err.response.data.message);
-      } else {
-        setError('Something went wrong. Please try again.');
-      }
+      setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
     } finally {
       setLoading(false);
     }
