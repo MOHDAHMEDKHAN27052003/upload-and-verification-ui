@@ -1,6 +1,4 @@
-import axios from 'axios';
-
-const API_BASE_URL = 'http://localhost:4000';
+import { apiClient } from "@/app/api";
 
 export interface SendOtpPayload {
   email: string;
@@ -14,17 +12,12 @@ export async function sendOtp(
   payload: SendOtpPayload,
 ): Promise<SendOtpResponse> {
   try {
-    const response = await axios.post<SendOtpResponse>(
-      `${API_BASE_URL}/auth/send-otp`,
+    const { data } = await apiClient.post<SendOtpResponse>(
+      '/auth/send-otp',
       payload,
     );
-
-    return response.data;
-  } catch (err: unknown) {
-    if (!axios.isAxiosError(err)) {
-      throw new Error('Something went wrong. Please try again.');
-    }
-
+    return data;
+  } catch (err: any) {
     const message = err.response?.data?.message;
 
     if (!message) {
