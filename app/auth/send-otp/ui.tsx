@@ -2,6 +2,9 @@
 
 import { SubmitEvent, useState } from 'react';
 import { sendOtp } from './api';
+import { inputStyles, labelStyles } from '@/styles/form';
+import { descriptionStyles, errorMessageStyles, headingStyles, successMessageStyles } from '@/styles/text';
+import { buttonStyles } from '@/styles/button';
 
 export default function SendOtpUi() {
   const [email, setEmail] = useState('');
@@ -28,19 +31,14 @@ export default function SendOtpUi() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="w-full max-w-md rounded-xl border border-border bg-card p-8 shadow-sm">
-        <h1 className="mb-2 text-2xl font-bold text-foreground">
-          Send OTP
-        </h1>
-        <p className="mb-6 text-sm text-muted-fg">
+        <h1 className={headingStyles}>Send OTP</h1>
+        <p className={descriptionStyles}>
           Enter your email address to receive a one-time password.
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label
-              htmlFor="email"
-              className="mb-1 block text-sm font-medium text-foreground"
-            >
+            <label htmlFor="email" className={labelStyles}>
               Email address
             </label>
             <input
@@ -50,34 +48,27 @@ export default function SendOtpUi() {
               autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="username@example.domain"
-              className="w-full rounded-lg border border-border bg-background px-3 py-2 text-foreground placeholder:text-muted-fg focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className={inputStyles}
             />
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-lg bg-accent px-4 py-2 font-semibold text-accent-fg transition-colors hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-60"
+            className={buttonStyles}
           >
             {loading ? 'Sending…' : 'Send OTP'}
           </button>
         </form>
 
         {message && (
-          <p
-            role="status"
-            className="mt-4 rounded-lg bg-success/10 px-3 py-2 text-sm text-success"
-          >
+          <p role="status" className={successMessageStyles}>
             {message}
           </p>
         )}
 
         {error && (
-          <p
-            role="alert"
-            className="mt-4 rounded-lg bg-danger/10 px-3 py-2 text-sm text-danger"
-          >
+          <p role="alert" className={errorMessageStyles}>
             {error}
           </p>
         )}
