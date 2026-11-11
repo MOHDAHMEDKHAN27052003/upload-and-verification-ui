@@ -3,11 +3,21 @@
 import { SubmitEvent, useState } from 'react';
 import { sendOtp } from './api';
 import { inputStyles, labelStyles } from '@/styles/form';
-import { descriptionStyles, errorMessageStyles, headingStyles, successMessageStyles } from '@/styles/text';
+import {
+  descriptionStyles,
+  errorMessageStyles,
+  headingStyles,
+  successMessageStyles,
+} from '@/styles/text';
 import { buttonStyles } from '@/styles/button';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { setEmail } from '@/store/otpSlice';
 
 export default function SendOtpUi() {
-  const [email, setEmail] = useState('');
+  const dispatch = useAppDispatch();
+  // Read the persisted email from Redux
+  const email = useAppSelector((state) => state.otp.email);
+
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -22,7 +32,9 @@ export default function SendOtpUi() {
       const response = await sendOtp({ email });
       setMessage(response.message);
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
+      setError(
+        err instanceof Error ? err.message : 'Something went wrong. Please try again.'
+      );
     } finally {
       setLoading(false);
     }
@@ -47,16 +59,12 @@ export default function SendOtpUi() {
               required
               autoComplete="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => dispatch(setEmail(e.target.value))}
               className={inputStyles}
             />
           </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className={buttonStyles}
-          >
+          <button type="submit" disabled={loading} className={buttonStyles}>
             {loading ? 'Sending…' : 'Send OTP'}
           </button>
         </form>
