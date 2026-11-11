@@ -12,12 +12,13 @@ import {
 import { buttonStyles } from '@/styles/button';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { setEmail } from '@/store/otpSlice';
+import { useRouter } from 'next/navigation';
 
 export default function SendOtpUi() {
   const dispatch = useAppDispatch();
   // Read the persisted email from Redux
   const email = useAppSelector((state) => state.otp.email);
-
+  const router = useRouter();
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -31,6 +32,7 @@ export default function SendOtpUi() {
     try {
       const response = await sendOtp({ email });
       setMessage(response.message);
+      router.push('/auth/verify-otp');
     } catch (err: unknown) {
       setError(
         err instanceof Error ? err.message : 'Something went wrong. Please try again.'
