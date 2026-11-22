@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/store/hooks'; // adjust path
 import { clearEmail } from '@/store/otpSlice'; // adjust path
 import { verifyOtp, VerifyOtpError } from './api';
+import { descriptionStyles, errorMessageStyles, headingStyles, successMessageStyles } from '@/styles/text';
+import { buttonStyles } from '@/styles/button';
 
 const OTP_LENGTH = 6;
 
@@ -108,10 +110,8 @@ export default function VerifyOtpUi() {
         <div className="bg-card text-card-fg border border-border rounded-2xl shadow-sm p-8">
           {/* Header */}
           <div className="text-center mb-6">
-            <h1 className="text-2xl font-semibold text-primary">
-              Verify your OTP
-            </h1>
-            <p className="mt-2 text-sm text-muted-fg">
+            <h1 className={headingStyles}>Verify your OTP</h1>
+            <p className={descriptionStyles}>
               We sent a 6-digit code to{' '}
               <span className="font-medium text-foreground">
                 {email || 'your email'}
@@ -148,18 +148,12 @@ export default function VerifyOtpUi() {
 
             {/* Feedback */}
             {error && (
-              <p
-                role="alert"
-                className="text-sm text-center text-danger bg-danger/10 rounded-md py-2 px-3"
-              >
+              <p role="alert" className={errorMessageStyles}>
                 {error}
               </p>
             )}
             {success && (
-              <p
-                role="status"
-                className="text-sm text-center text-success bg-success/10 rounded-md py-2 px-3"
-              >
+              <p role="status" className={successMessageStyles}>
                 {success}
               </p>
             )}
@@ -167,11 +161,7 @@ export default function VerifyOtpUi() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full inline-flex items-center justify-center gap-2 rounded-lg
-                         bg-accent text-accent-fg font-semibold py-3 px-4
-                         hover:opacity-90 active:opacity-80 transition
-                         focus:outline-none focus-visible:ring-2 focus-visible:ring-ring
-                         disabled:opacity-60 disabled:cursor-not-allowed"
+              className={buttonStyles}
             >
               {isSubmitting ? 'Verifying…' : 'Verify OTP'}
             </button>
