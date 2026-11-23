@@ -3,7 +3,7 @@
 import { ClipboardEvent, KeyboardEvent, SubmitEvent, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/store/hooks'; // adjust path
-import { clearEmail } from '@/store/otpSlice'; // adjust path
+import { clearEmail } from '@/store/slice/otpSlice'; // adjust path
 import { verifyOtp, VerifyOtpError } from './api';
 import { descriptionStyles, errorMessageStyles, headingStyles, successMessageStyles } from '@/styles/text';
 import { buttonStyles } from '@/styles/button';

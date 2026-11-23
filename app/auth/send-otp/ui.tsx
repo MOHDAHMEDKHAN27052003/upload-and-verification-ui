@@ -11,7 +11,7 @@ import {
 } from '@/styles/text';
 import { buttonStyles } from '@/styles/button';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { setEmail } from '@/store/otpSlice';
+import { setEmail } from '@/store/slice/otpSlice';
 import { useRouter } from 'next/navigation';
 
 export default function SendOtpUi() {
