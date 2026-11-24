@@ -7,6 +7,7 @@ import { clearEmail } from '@/store/slice/otpSlice'; // adjust path
 import { verifyOtp, VerifyOtpError } from './api';
 import { descriptionStyles, errorMessageStyles, headingStyles, successMessageStyles } from '@/styles/text';
 import { buttonStyles } from '@/styles/button';
+import { setAuthenticated } from '@/store/slice/authSlice';
 
 const OTP_LENGTH = 6;
 
@@ -88,6 +89,7 @@ export default function VerifyOtpUi() {
         otp: Number(otpCode),
       });
       setSuccess(res.message || 'OTP verified successfully');
+      dispatch(setAuthenticated(true));
       dispatch(clearEmail());
 
       // Redirect to the reset-password step (adjust route as needed)

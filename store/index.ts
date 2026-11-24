@@ -1,3 +1,4 @@
+// store/index.ts
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import {
   persistStore,
@@ -9,19 +10,21 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
-import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
+import storage from 'redux-persist/lib/storage';
 import otpReducer from './slice/otpSlice';
+import authReducer from './slice/authSlice';
 
 const rootReducer = combineReducers({
   otp: otpReducer,
+  auth: authReducer,
 });
 
 const persistConfig = {
   key: 'root',
   version: 1,
   storage,
-  // Only persist the otp slice
-  whitelist: ['otp'],
+  // Persist both otp and auth so the session survives reloads
+  whitelist: ['otp', 'auth'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

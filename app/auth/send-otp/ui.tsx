@@ -1,6 +1,6 @@
 'use client';
 
-import { SubmitEvent, useState } from 'react';
+import { SubmitEvent, useEffect, useState } from 'react';
 import { sendOtp } from './api';
 import { inputStyles, labelStyles } from '@/styles/form';
 import {
@@ -18,10 +18,19 @@ export default function SendOtpUi() {
   const dispatch = useAppDispatch();
   // Read the persisted email from Redux
   const email = useAppSelector((state) => state.otp.email);
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
   const router = useRouter();
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.replace('/users/profile');
+    }
+  }, [isAuthenticated, router]);
+
+  if (isAuthenticated) return null; // or a spinner
 
   const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
