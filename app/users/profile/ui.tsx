@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { getMe, type User } from "./api";
+import { descriptionStyles, headingStyles } from "@/styles/text";
 
 export default function ProfileUi() {
   const [user, setUser] = useState<User | null>(null);
@@ -34,10 +35,10 @@ export default function ProfileUi() {
       <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8">
         {/* Header */}
         <header className="mb-8">
-          <h1 className="text-2xl font-bold tracking-tight text-primary sm:text-3xl">
+          <h1 className={headingStyles}>
             My Profile
           </h1>
-          <p className="mt-1 text-sm text-muted-fg">
+          <p className={descriptionStyles}>
             Manage your account details and view your membership.
           </p>
         </header>

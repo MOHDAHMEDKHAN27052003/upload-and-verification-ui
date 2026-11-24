@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import ProfileUi from "./ui";
 
 export const metadata: Metadata = {
-  title: "Profile",
+  title: "My Profile",
 };
 
 export default function ProfilePage() {
